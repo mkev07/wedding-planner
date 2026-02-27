@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Home() {
   return (
     <div className="min-h-screen bg-white">
@@ -9,14 +11,14 @@ export default function Home() {
               <a href="#" className="text-xs font-medium text-foreground/60 hover:text-foreground transition-colors">About</a>
               <a href="#" className="text-xs font-medium text-foreground/60 hover:text-foreground transition-colors">Features</a>
             </div>
-            <a href="/" className="font-serif text-xl tracking-tight text-foreground/80">
+            <Link href="/" className="font-serif text-xl tracking-tight text-foreground/80">
               Wed
-            </a>
+            </Link>
             <div className="flex items-center gap-4">
               <a href="#" className="text-xs font-medium text-foreground/60 hover:text-foreground transition-colors">Timeline</a>
-              <button className="text-xs font-medium bg-foreground text-white px-3 py-1.5 rounded-lg hover:bg-foreground/90 transition-colors">
+              <Link href="/dashboard" className="text-xs font-medium bg-foreground text-white px-3 py-1.5 rounded-lg hover:bg-foreground/90 transition-colors">
                 Get Started
-              </button>
+              </Link>
             </div>
           </div>
         </div>
@@ -47,12 +49,12 @@ export default function Home() {
             className="animate-fade-in-up flex gap-3 mt-2"
             style={{ animationDelay: "0.3s" }}
           >
-            <button className="bg-foreground text-white px-5 py-2.5 rounded-xl text-sm font-medium hover:bg-foreground/90 transition-colors">
+            <Link href="/dashboard" className="bg-foreground text-white px-5 py-2.5 rounded-xl text-sm font-medium hover:bg-foreground/90 transition-colors">
               Start Planning
-            </button>
-            <button className="bg-foreground/5 text-foreground/70 px-5 py-2.5 rounded-xl text-sm font-medium hover:bg-foreground/10 transition-colors">
+            </Link>
+            <a href="#features" className="bg-foreground/5 text-foreground/70 px-5 py-2.5 rounded-xl text-sm font-medium hover:bg-foreground/10 transition-colors">
               Learn More
-            </button>
+            </a>
           </div>
         </div>
       </section>
@@ -117,9 +119,9 @@ export default function Home() {
             className="animate-fade-in-up flex flex-col gap-3 items-center"
             style={{ animationDelay: "0.3s" }}
           >
-            <button className="bg-foreground text-white px-5 py-2.5 rounded-xl text-sm font-medium hover:bg-foreground/90 transition-colors">
+            <Link href="/dashboard" className="bg-foreground text-white px-5 py-2.5 rounded-xl text-sm font-medium hover:bg-foreground/90 transition-colors">
               Get Started — It&apos;s Free
-            </button>
+            </Link>
             <span className="text-foreground/30 text-sm">
               No account needed to start
             </span>

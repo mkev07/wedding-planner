@@ -1,0 +1,106 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Wedding {
+  id        String   @id @default(cuid())
+  name      String
+  date      DateTime?
+  venue     String?
+  budget    Float    @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  guests         Guest[]
+  budgetItems    BudgetItem[]
+  timelineEvents TimelineEvent[]
+  vendors        Vendor[]
+  tables         Table[]
+  checklistItems ChecklistItem[]
+}
+
+model Guest {
+  id           String  @id @default(cuid())
+  name         String
+  email        String?
+  rsvpStatus   String  @default("pending") // pending, accepted, declined
+  rsvpToken    String  @unique @default(cuid())
+  dietaryNotes String?
+  group        String?
+  tableId      String?
+  table        Table?  @relation(fields: [tableId], references: [id], onDelete: SetNull)
+  weddingId    String
+  wedding      Wedding @relation(fields: [weddingId], references: [id], onDelete: Cascade)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model BudgetItem {
+  id              String  @id @default(cuid())
+  category        String
+  description     String
+  estimatedAmount Float   @default(0)
+  actualAmount    Float   @default(0)
+  paid            Boolean @default(false)
+  weddingId       String
+  wedding         Wedding @relation(fields: [weddingId], references: [id], onDelete: Cascade)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model TimelineEvent {
+  id        String   @id @default(cuid())
+  title     String
+  date      DateTime?
+  completed Boolean  @default(false)
+  category  String?
+  weddingId String
+  wedding   Wedding  @relation(fields: [weddingId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Vendor {
+  id            String  @id @default(cuid())
+  name          String
+  category      String
+  contactName   String?
+  contactEmail  String?
+  contactPhone  String?
+  cost          Float   @default(0)
+  bookingStatus String  @default("researching") // researching, contacted, booked, paid
+  notes         String?
+  weddingId     String
+  wedding       Wedding @relation(fields: [weddingId], references: [id], onDelete: Cascade)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Table {
+  id        String  @id @default(cuid())
+  name      String
+  capacity  Int     @default(8)
+  weddingId String
+  wedding   Wedding @relation(fields: [weddingId], references: [id], onDelete: Cascade)
+  guests    Guest[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ChecklistItem {
+  id        String  @id @default(cuid())
+  title     String
+  category  String  // "12+ Months Before", "9-12 Months", etc.
+  sortOrder Int     @default(0)
+  completed Boolean @default(false)
+  notes     String?
+  weddingId String
+  wedding   Wedding @relation(fields: [weddingId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
